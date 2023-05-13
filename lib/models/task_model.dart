@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../api/api_task.dart';
+
 List<Task> TaskListFromJson(String str) => List<Task>.from(json.decode(str).map((x) => Task.fromJson(x)));
 
 String TaskListToJson(List<Task> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
@@ -15,7 +17,6 @@ class Task {
   String? comments;
   String? description;
   String? tags;
-  String token;
   DateTime? createdAt;
   DateTime? updatedAt;
 
@@ -27,7 +28,6 @@ class Task {
     this.comments,
     this.description,
     this.tags,
-    this.token = 'prueba1',
     this.createdAt,
     this.updatedAt,
   });
@@ -50,7 +50,6 @@ class Task {
     comments: json["comments"],
     description: json["description"],
     tags: json["tags"],
-    token: json["token"],
     createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
     updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
   );
