@@ -3,6 +3,7 @@ import 'package:gestion_tareas/api/api_task.dart' as api;
 import 'package:gestion_tareas/presentation/home/widgets/card_task.dart';
 import 'package:gestion_tareas/presentation/home/widgets/fab.dart';
 import 'package:gestion_tareas/providers/home_provider.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/task_model.dart';
@@ -22,7 +23,7 @@ class HomePage extends StatelessWidget {
         title: Text('Tareas'),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Fab(onPressed: () => {}),
+      floatingActionButton: Fab(onPressed: () => context.pushNamed('taskForm', params: {'taskId': '0'})),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: context.watch<Home>().selectedIndex,
         onTap: (index) => context.read<Home>().selectedIndex = index,

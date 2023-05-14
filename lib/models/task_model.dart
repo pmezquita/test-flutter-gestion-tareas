@@ -1,6 +1,4 @@
 import 'dart:convert';
-
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../api/api_task.dart';
@@ -68,40 +66,4 @@ class Task {
     "created_at": createdAt?.toIso8601String(),
     "updated_at": updatedAt?.toIso8601String(),
   };
-
-  static List<DropdownMenuItem<int>> getDropdownDia(int year, int month) {
-    final lastDay = DateTime(year, month + 1, 0).day;
-    return List.generate(
-        lastDay, (index) => DropdownMenuItem<int>(value: index + 1, child: Text((index + 1).toString())));
-  }
-
-  static List<DropdownMenuItem<int>> getDropdownMes() {
-    List<DropdownMenuItem<int>> list = [];
-    mesesMap.forEach((key, value) {
-      list.add(DropdownMenuItem(value: key, child: Text(value)));
-    });
-    return list;
-  }
-
-  static const mesesMap = {
-    1: 'Enero',
-    2: 'Febrero',
-    3: 'Marzo',
-    4: 'Abril',
-    5: 'Mayo',
-    6: 'Junio',
-    7: 'Julio',
-    8: 'Agosto',
-    9: 'Septiembre',
-    10: 'Octubre',
-    11: 'Noviembre',
-    12: 'Diciembre',
-  };
-
-  static List<DropdownMenuItem<int>> getDropdownAnio(int year) {
-    final currentYear = DateTime.now().year;
-    final initYear = year < DateTime.now().year ? year : currentYear;
-    return List.generate(
-        50, (index) => DropdownMenuItem(value: initYear + index, child: Text((initYear + index).toString())));
-  }
 }

@@ -47,7 +47,7 @@ class CardTask extends StatelessWidget {
                   const SizedBox(height: 10.0),
                 ],
               ),
-              onTap: () => context.goNamed('taskView/${task.id}')), // TODO: implementar nueva pantalla
+              onTap: () => context.pushNamed('taskForm', params: {'taskId': '${task.id}'})),
         ),
         onLongPress: () => _onDelete(context),
       ),

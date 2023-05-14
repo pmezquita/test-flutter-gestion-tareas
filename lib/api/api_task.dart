@@ -39,3 +39,18 @@ Future<List<Task>> getTasksType(int isCompleted) async {
 
   return tasks.where((element) => element.isCompleted == isCompleted).toList();
 }
+
+Future<Task?> getTaskById(int taskId) async {
+  Uri url = _uri("/$taskId", queryParameters: {
+    'token': token,
+  });
+  try {
+    final http.Response resp = await http.get(url, headers: _headers);
+    if (resp.statusCode != HttpStatus.ok) return null;
+
+    return TaskListFromJson(resp.body).first;
+  } on Exception catch (e) {
+    print(e);
+    return null;
+  }
+}
