@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gestion_tareas/api/api_task.dart' as api;
+import 'package:gestion_tareas/presentation/home/widgets/card_task.dart';
 import 'package:gestion_tareas/presentation/home/widgets/fab.dart';
 import 'package:gestion_tareas/providers/home_provider.dart';
 import 'package:provider/provider.dart';
@@ -8,9 +9,8 @@ import '../../models/task_model.dart';
 import '../../theme/app_theme.dart';
 
 class HomePage extends StatelessWidget {
-  final String idUser;
 
-  const HomePage({Key? key, this.idUser = '0'})
+  const HomePage({Key? key})
       : super(
           key: key,
         );
@@ -64,7 +64,7 @@ class HomePage extends StatelessWidget {
                       style: Theme.of(context).textTheme.displaySmall,
                     ),
                   ))
-                : SliverList(delegate: SliverChildListDelegate(tasks.map((task) => Text(task.title)).toList()));
+                : SliverList(delegate: SliverChildListDelegate(tasks.map((task) => CardTask(task: task)).toList()));
           } else {
             return const SliverToBoxAdapter(child: Center(child: CircularProgressIndicator()));
           }

@@ -38,6 +38,8 @@ class Task {
 
   bool get isEditable => isCompleted == 0;
 
+  bool get completada => isCompleted == 1;
+
   void setCompleted() {
     isCompleted = 1;
   }
