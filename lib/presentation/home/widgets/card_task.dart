@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../../../models/task_model.dart';
 import '../../../theme/app_theme.dart';
 import '../../shared/widgets/alertdialog_2_option.dart';
+import 'package:gestion_tareas/api/api_task.dart' as api;
 
 class CardTask extends StatelessWidget {
   final Task task;
@@ -49,12 +50,12 @@ class CardTask extends StatelessWidget {
               ),
               onTap: () => context.pushNamed('taskForm', params: {'taskId': '${task.id}'})),
         ),
-        onLongPress: () => _onDelete(context),
+        onLongPress: () => _onDelete(context, task.id!),
       ),
     );
   }
 
-  void _onDelete(BuildContext context) => showDialog<String>(
+  void _onDelete(BuildContext context, int taskId) => showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog2Opt(
             title: '¿Seguro que quieres eliminar ésta tarea?',
@@ -62,7 +63,7 @@ class CardTask extends StatelessWidget {
             onPressed1Opt: () => Navigator.pop(context),
             onPressed2Opt: () async {
               // Eliminar task de DB
-              // await TaskDb.delete(task.id!);
+              await api.deleteTaskById(taskId.toString());
 
               if (context.mounted) {
                 // Emitir estado
