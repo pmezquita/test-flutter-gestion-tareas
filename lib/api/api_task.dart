@@ -12,7 +12,7 @@ const String _auth =
 const String token = 'prueba1'; // TODO: cambiar
 // const String token = '3kr-0Vi1*Vlx';
 
-const _headers = {'Authorization': _auth};
+Map<String,String> _headers = {'Authorization': _auth};
 
 Uri _uri(String endpoint, {Map<String, dynamic>? queryParameters}) =>
     Uri(scheme: _apiScheme, host: _apiHost, path: "$_prefix$endpoint", queryParameters: queryParameters);
@@ -52,5 +52,19 @@ Future<Task?> getTaskById(String taskId) async {
   } on Exception catch (e) {
     print(e);
     return null;
+  }
+}
+
+Future<bool> createTask(Task task) async {
+  Uri url = _uri("");
+  _headers.addAll({'Content-Type': 'application/x-www-form-urlencoded'});
+  try {
+    final http.Response resp = await http.post(url, body: task.toJson(), headers: _headers);
+    if (resp.statusCode != HttpStatus.created) return false;
+
+    return true;
+  } on Exception catch (e) {
+    print(e);
+    return false;
   }
 }

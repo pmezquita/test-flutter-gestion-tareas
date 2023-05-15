@@ -54,17 +54,22 @@ class Task {
         updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
       );
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "title": title,
-        "is_completed": isCompleted,
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> map = {
+      "title": title,
+      "is_completed": isCompleted.toString(),
+      "comments": comments,
+      "description": description,
+      "tags": tags,
+      "token": token,
+    };
+
+    if (dueDate != null) {
+      map.addAll({
         "due_date":
-            "${dueDate!.year.toString().padLeft(4, '0')}-${dueDate!.month.toString().padLeft(2, '0')}-${dueDate!.day.toString().padLeft(2, '0')}",
-        "comments": comments,
-        "description": description,
-        "tags": tags,
-        "token": token,
-        "created_at": createdAt?.toIso8601String(),
-        "updated_at": updatedAt?.toIso8601String(),
-      };
+            "${dueDate!.year.toString().padLeft(4, '0')}-${dueDate!.month.toString().padLeft(2, '0')}-${dueDate!.day.toString().padLeft(2, '0')}"
+      });
+    }
+    return map;
+  }
 }

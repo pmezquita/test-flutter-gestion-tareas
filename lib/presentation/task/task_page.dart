@@ -11,6 +11,7 @@ import 'package:gestion_tareas/api/api_task.dart' as api;
 import '../../helpers/constants.dart';
 import '../../helpers/utils.dart';
 import '../../theme/app_theme.dart';
+import '../shared/widgets/alertdialog_error.dart';
 import '../shared/widgets/decoration_field.dart';
 import '../shared/widgets/label_field.dart';
 
@@ -50,7 +51,7 @@ class TaskPage extends StatelessWidget {
     final DateTime? selected = await showDatePicker(
       errorInvalidText: "ERROR",
       context: context,
-      initialDate: context.read<TaskProvider>().selectedDate,
+      initialDate: context.read<TaskProvider>().selectedDate ?? DateTime.now(),
       firstDate: FECHA_INI_APP,
       lastDate: FECHA_FIN_APP,
       builder: (context, child) => Theme(
@@ -199,6 +200,14 @@ class TaskPage extends StatelessWidget {
                       hint: 'Puedes indicar una fecha límite',
                       enabled: false,
                     ),
+                    onSaved: (_) {
+                      if(tecFecha.text.isEmpty){
+                        task.dueDate = null;
+                        context.read<TaskProvider>().selectedDate = null;
+                      }else{
+                        task.dueDate = context.read<TaskProvider>().selectedDate;
+                      }
+                    },
                   ),
                 ),
                 _getButtonLimpiarFecha(task, context, formKey, tecFecha),
@@ -242,18 +251,18 @@ class TaskPage extends StatelessWidget {
 
       // Crear tarea en la BD
       if (task.isNew) {
-        // if ((await api.insert(tarea)) == 0) {
-        //   if (context.mounted) {
-        //     showDialog<String>(
-        //         context: context,
-        //         builder: (BuildContext context) => const AlertDialogError(msg: 'Error creando tarea'));
-        //   }
-        //   return;
-        // }
+        if (!(await api.createTask(task))) {
+          if (context.mounted) {
+            showDialog<String>(
+                context: context,
+                builder: (BuildContext context) => const AlertDialogError(msg: 'Error creando tarea'));
+          }
+          return;
+        }
       } else {
         if (markCompleted) task.setCompleted();
 
-        // if ((await api.patch(tarea)) == 0) {
+        // if ((await api.put(tarea)) == 0) {
         //   if (context.mounted) {
         //     showDialog<String>(
         //         context: context,
