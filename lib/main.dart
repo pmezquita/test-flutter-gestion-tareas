@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gestion_tareas/providers/home_provider.dart';
+import 'package:gestion_tareas/providers/task_provider.dart';
 import 'package:gestion_tareas/router/my_go_router.dart';
 import 'package:gestion_tareas/theme/app_theme.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +18,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<Home>(create: (_) => Home()),
+        ChangeNotifierProvider<HomeProvider>(create: (_) => HomeProvider()),
+        ChangeNotifierProvider<TaskProvider>(create: (_) => TaskProvider()),
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,

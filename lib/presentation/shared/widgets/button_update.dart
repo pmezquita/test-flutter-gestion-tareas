@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
 import '../../../theme/app_theme.dart';
-class ButtonUpdate extends StatelessWidget {
+
+class ButtonSecondary extends StatelessWidget {
   final String text;
   final VoidCallback? onPressed;
-  const ButtonUpdate({Key? key, required this.text, this.onPressed}) : super(key: key);
+  final Icon? icon;
+
+  const ButtonSecondary({Key? key, required this.text, this.onPressed, this.icon}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +20,7 @@ class ButtonUpdate extends StatelessWidget {
         side: const BorderSide(color: secondary),
       ),
       label: Text(text, style: Theme.of(context).textTheme.displaySmall),
-      icon: const Icon(Icons.edit_outlined),
+      icon: icon ?? const Icon(Icons.edit_outlined),
     );
   }
 }

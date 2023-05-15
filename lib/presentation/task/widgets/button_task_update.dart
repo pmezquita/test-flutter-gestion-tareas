@@ -23,7 +23,7 @@ class ButtonTaskUpdate extends StatelessWidget {
       width: double.infinity,
       height: 40.0,
       margin: marginBtnFormSecundario,
-      child: ButtonUpdate(
+      child: ButtonSecondary(
         text: text,
         onPressed: onPressed ?? () {},
       ),

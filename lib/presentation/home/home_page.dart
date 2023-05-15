@@ -10,7 +10,6 @@ import '../../models/task_model.dart';
 import '../../theme/app_theme.dart';
 
 class HomePage extends StatelessWidget {
-
   const HomePage({Key? key})
       : super(
           key: key,
@@ -25,8 +24,8 @@ class HomePage extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Fab(onPressed: () => context.pushNamed('taskForm', params: {'taskId': '0'})),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: context.watch<Home>().selectedIndex,
-        onTap: (index) => context.read<Home>().selectedIndex = index,
+        currentIndex: context.watch<HomeProvider>().selectedIndex,
+        onTap: (index) => context.read<HomeProvider>().selectedIndex = index,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             label: '',
@@ -42,7 +41,7 @@ class HomePage extends StatelessWidget {
       ),
       body: CustomScrollView(
         slivers: [
-          _sliverTaskList(context, context.watch<Home>().selectedIndex),
+          _sliverTaskList(context, context.watch<HomeProvider>().selectedIndex),
         ],
       ),
     );

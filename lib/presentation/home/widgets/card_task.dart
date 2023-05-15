@@ -66,7 +66,7 @@ class CardTask extends StatelessWidget {
 
               if (context.mounted) {
                 // Emitir estado
-                context.read<Home>().selectedIndex = task.isCompleted;
+                context.read<HomeProvider>().selectedIndex = task.isCompleted;
                 // cerrar alert
                 Navigator.pop(context);
               }
