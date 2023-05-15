@@ -61,7 +61,7 @@ class HomePage extends StatelessWidget {
                     child: Center(
                     child: Text(
                       'Sin resultados',
-                      style: Theme.of(context).textTheme.displaySmall,
+                      style: TextStyle(color: secondary),
                     ),
                   ))
                 : SliverList(delegate: SliverChildListDelegate(tasks.map((task) => CardTask(task: task)).toList()));

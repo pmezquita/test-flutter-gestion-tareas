@@ -7,7 +7,6 @@ const Color primary40 = Color(0xff65C0D4);
 const Color primary60 = Color(0xffA3D9E5);
 const Color primary90 = Color(0xffE0F2F6);
 
-
 const Color secondary = Color(0xffFFBA76);
 const Color secondaryLight = Color(0xffFFF1E4);
 
@@ -28,27 +27,15 @@ class AppTheme {
         colorSchemeSeed: primary40,
         fontFamily: GoogleFonts.poppins().fontFamily,
         textTheme: GoogleFonts.poppinsTextTheme().copyWith(
-          titleSmall: const TextStyle(color: Colors.white, fontSize: 24.0, fontWeight: FontWeight.w500),
-          titleMedium: const TextStyle(color: primary20, fontSize: 14.0, fontWeight: FontWeight.w400),
-          headlineLarge: const TextStyle(color: primary40, fontSize: 25.0, fontWeight: FontWeight.w600),
-          headlineMedium: const TextStyle(color: primary40, fontSize: 14.0, fontWeight: FontWeight.w400),
-          bodyLarge: const TextStyle(color: primary40, fontSize: 12.0, fontWeight: FontWeight.w600),
-          bodyMedium: const TextStyle(color: primary20, fontSize: 14.0, fontWeight: FontWeight.w400),
-          displayMedium: const TextStyle(color: primary60, fontSize: 12.0, fontWeight: FontWeight.w400),
-          labelLarge: const TextStyle(color: primary20, fontSize: 18.0, fontWeight: FontWeight.w700),
-          labelMedium: const TextStyle(color: primary20, fontSize: 15.0, fontWeight: FontWeight.w400),
+          bodyMedium: const TextStyle(color: primary40, fontSize: 12.0, fontWeight: FontWeight.w600),
+          titleMedium: const TextStyle(color: primary20, fontSize: 14.0, fontWeight: FontWeight.w600),
           labelSmall: const TextStyle(color: primary20, fontSize: 14.0, fontWeight: FontWeight.w700),
-          displaySmall: const TextStyle(color: secondary, fontSize: 15.0, fontWeight: FontWeight.w600),
         ),
         appBarTheme: AppBarTheme(
           centerTitle: true,
-          // backgroundColor: Colors.transparent,
-          elevation: 0,
           titleTextStyle: TextStyle(
             fontFamily: GoogleFonts.poppins().fontFamily,
-            color: Colors.white,
             fontSize: 24.0,
-            fontWeight: FontWeight.w500,
           ),
         ),
         cardTheme: const CardTheme(
@@ -70,17 +57,16 @@ class AppTheme {
               elevation: 0.0,
               shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(12.0))),
               backgroundColor: primary40,
-              foregroundColor: Colors.white,
               textStyle: TextStyle(
                 fontFamily: GoogleFonts.poppins().fontFamily,
                 color: Colors.white,
                 fontSize: 15.0,
-                fontWeight: FontWeight.w600,
+                fontWeight: FontWeight.w600
               )),
         ),
         inputDecorationTheme: InputDecorationTheme(
-          labelStyle: const TextStyle(color: secondary, fontSize: 14.0, fontWeight: FontWeight.w400),
-          hintStyle: const TextStyle(color: primary60, fontSize: 14.0, fontWeight: FontWeight.w400),
+          labelStyle: const TextStyle(color: secondary, fontSize: 14.0,),
+          hintStyle: const TextStyle(color: primary60, fontSize: 14.0,),
           disabledBorder: const OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(6.0)),
             borderSide: BorderSide(color: primary40),
@@ -101,21 +87,11 @@ class AppTheme {
             borderRadius: BorderRadius.all(Radius.circular(6.0)),
             borderSide: BorderSide(color: secondary),
           ),
-          prefixIconColor: MaterialStateColor.resolveWith((states) {
-            if (states.contains(MaterialState.focused)) {
-              return secondary;
-            }
-            if (states.contains(MaterialState.error)) {
-              return Colors.red;
-            }
-            return primary40;
-          }),
-          suffixIconColor: MaterialStateColor.resolveWith((states) => primary40),
         ),
         dialogTheme: const DialogTheme(
           backgroundColor: primary90,
-          titleTextStyle: TextStyle(color: primary20, fontSize: 14.0, fontWeight: FontWeight.w400),
-          contentTextStyle: TextStyle(color: primary40, fontSize: 14.0, fontWeight: FontWeight.w400),
+          titleTextStyle: TextStyle(color: primary20, fontSize: 15.0),
+          contentTextStyle: TextStyle(color: primary40, fontSize: 14.0),
           actionsPadding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
         ),
         progressIndicatorTheme: const ProgressIndicatorThemeData(color: secondary),

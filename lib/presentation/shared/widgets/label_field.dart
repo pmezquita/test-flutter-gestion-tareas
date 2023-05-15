@@ -4,7 +4,6 @@ import 'package:gestion_tareas/theme/app_theme.dart';
 class LabelField extends StatelessWidget {
   final String label;
 
-
   const LabelField({Key? key, required this.label}) : super(key: key);
 
   @override
@@ -12,10 +11,7 @@ class LabelField extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: paddingLabel,
-      child: Text(
-        label,
-        style: Theme.of(context).textTheme.bodyLarge,
-      ),
+      child: Text(label),
     );
   }
 }

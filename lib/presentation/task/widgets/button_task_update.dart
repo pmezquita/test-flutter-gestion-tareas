@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../theme/app_theme.dart';
-import '../../shared/widgets/button_update.dart';
+import '../../shared/widgets/button_secondary.dart';
 
 class ButtonTaskUpdate extends StatelessWidget {
   final String text;

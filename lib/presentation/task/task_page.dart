@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gestion_tareas/models/task_model.dart';
-import 'package:gestion_tareas/presentation/shared/widgets/button_update.dart';
+import 'package:gestion_tareas/presentation/shared/widgets/button_secondary.dart';
 import 'package:gestion_tareas/presentation/task/widgets/button_task.dart';
 import 'package:gestion_tareas/presentation/task/widgets/button_task_update.dart';
 import 'package:gestion_tareas/providers/task_provider.dart';
@@ -48,11 +48,12 @@ class TaskPage extends StatelessWidget {
   }
 
   void _seleccionarFecha(BuildContext context, TextEditingController tecFecha) async {
+    final initialDate = context.read<TaskProvider>().selectedDate ?? DateTime.now();
     final DateTime? selected = await showDatePicker(
       errorInvalidText: "ERROR",
       context: context,
-      initialDate: context.read<TaskProvider>().selectedDate ?? DateTime.now(),
-      firstDate: FECHA_INI_APP,
+      initialDate: initialDate,
+      firstDate: FECHA_INI_APP.isBefore(initialDate) ? FECHA_INI_APP : initialDate,
       lastDate: FECHA_FIN_APP,
       builder: (context, child) => Theme(
         data: Theme.of(context).copyWith(
@@ -243,6 +244,8 @@ class TaskPage extends StatelessWidget {
     required GlobalKey<FormState> formKey,
     bool markCompleted = false,
   }) async {
+    // TODO: verificar que al actualizar directamente una tarea sin estado de fecha seteado, se pierde la fecha
+
     if (!(formKey.currentState?.validate() ?? false)) {
       return;
     } else {

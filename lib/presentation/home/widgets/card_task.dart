@@ -23,7 +23,7 @@ class CardTask extends StatelessWidget {
           child: ListTile(
               title: Padding(
                 padding: const EdgeInsets.only(bottom: 10.0),
-                child: Text(task.title, style: tema.labelLarge),
+                child: Text(task.title, style: TextStyle(fontSize: 18)),
               ),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

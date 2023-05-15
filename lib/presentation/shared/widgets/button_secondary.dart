@@ -14,12 +14,11 @@ class ButtonSecondary extends StatelessWidget {
     return ElevatedButton.icon(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        textStyle: Theme.of(context).textTheme.displaySmall,
         foregroundColor: secondary,
         backgroundColor: secondaryLight,
         side: const BorderSide(color: secondary),
       ),
-      label: Text(text, style: Theme.of(context).textTheme.displaySmall),
+      label: Text(text),
       icon: icon ?? const Icon(Icons.edit_outlined),
     );
   }

@@ -8,7 +8,7 @@ class AlertDialogError extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      content: Text(msg, textAlign: TextAlign.center, style: Theme.of(context).textTheme.displaySmall),
+      content: Text(msg, textAlign: TextAlign.center, style: TextStyle(color: Colors.red)),
 
       actions: <Widget>[
         Row(
