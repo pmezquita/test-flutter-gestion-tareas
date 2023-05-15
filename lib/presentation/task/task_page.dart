@@ -262,16 +262,15 @@ class TaskPage extends StatelessWidget {
       } else {
         if (markCompleted) task.setCompleted();
 
-        // if ((await api.put(tarea)) == 0) {
-        //   if (context.mounted) {
-        //     showDialog<String>(
-        //         context: context,
-        //         builder: (BuildContext context) => const AlertDialogError(msg: 'Error acrualizando tarea'));
-        //   }
-        //   return;
-        // }
+        if (!(await api.updateTask(task))) {
+          if (context.mounted) {
+            showDialog<String>(
+                context: context,
+                builder: (BuildContext context) => const AlertDialogError(msg: 'Error actualizando tarea'));
+          }
+          return;
+        }
       }
-      // Emitir estado y Redireccionar a Home
       context.pop();
     }
   }

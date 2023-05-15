@@ -69,6 +69,20 @@ Future<bool> createTask(Task task) async {
   }
 }
 
+Future<bool> updateTask(Task task) async {
+  Uri url = _uri("/${task.id}");
+  _headers.addAll({'Content-Type': 'application/x-www-form-urlencoded'});
+  try {
+    final http.Response resp = await http.put(url, body: task.toJson(), headers: _headers);
+    if (resp.statusCode != HttpStatus.created) return false;
+
+    return true;
+  } on Exception catch (e) {
+    print(e);
+    return false;
+  }
+}
+
 Future<bool> deleteTaskById(String taskId) async {
   Uri url = _uri("/$taskId", queryParameters: {
     'token': token,
