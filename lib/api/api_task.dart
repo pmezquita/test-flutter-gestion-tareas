@@ -40,7 +40,7 @@ Future<List<Task>> getTasksType(int isCompleted) async {
   return tasks.where((element) => element.isCompleted == isCompleted).toList();
 }
 
-Future<Task?> getTaskById(int taskId) async {
+Future<Task?> getTaskById(String taskId) async {
   Uri url = _uri("/$taskId", queryParameters: {
     'token': token,
   });

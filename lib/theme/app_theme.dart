@@ -18,7 +18,7 @@ const paddingLabel = EdgeInsets.only(top: 20, bottom: 14);
 const myPaddingForm = EdgeInsets.symmetric(horizontal: 13.0);
 const marginBtnLogin = EdgeInsets.only(left: 25.0, right: 25.0, bottom: 25.0, top: 10.0);
 const marginBtnFormPrincipal = EdgeInsets.only(left: 16.0, right: 16.0, top: 25.0, bottom: 25.0);
-const marginBtnFormSecundario = EdgeInsets.only(left: 16.0, right: 16.0, top: 25.0);
+const marginBtnFormSecundario = EdgeInsets.only(left: 16.0, right: 16.0);
 const myPaddingCard = EdgeInsets.only(left: 16.0, right: 16.0, top: 10);
 
 class AppTheme {

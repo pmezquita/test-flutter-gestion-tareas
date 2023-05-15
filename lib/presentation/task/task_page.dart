@@ -11,7 +11,6 @@ import 'package:gestion_tareas/api/api_task.dart' as api;
 import '../../helpers/constants.dart';
 import '../../helpers/utils.dart';
 import '../../theme/app_theme.dart';
-import '../shared/widgets/alertdialog_error.dart';
 import '../shared/widgets/decoration_field.dart';
 import '../shared/widgets/label_field.dart';
 
@@ -31,100 +30,16 @@ class TaskPage extends StatelessWidget {
         title: Text('Tarea'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => context.pop(),
         ),
       ),
       body: CustomScrollView(
         slivers: [
           SliverFillRemaining(
             hasScrollBody: false,
-            child: Column(
-              children: <Widget>[
-                Padding(
-                  padding: myPaddingForm,
-                  child: Form(
-                    key: formKey,
-                    child: Column(
-                      children: [
-                        const LabelField(label: 'Título*'),
-                        TextFormField(
-                          initialValue: task.title,
-                          enabled: task.isEditable,
-                          decoration: textFieldDecoration(
-                            hint: 'Escribe aquí el título de tu tarea',
-                            enabled: task.isEditable,
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) return errorCampoObligatorio;
-
-                            return null;
-                          },
-                          onSaved: (value) {
-                            task.title = value ?? '';
-                          },
-                        ),
-                        const LabelField(label: 'Descripción'),
-                        TextFormField(
-                          initialValue: task.description,
-                          enabled: task.isEditable,
-                          keyboardType: TextInputType.multiline,
-                          maxLines: 5,
-                          decoration: textFieldDecoration(
-                            hint: 'Describe cómo será tu tarea',
-                            enabled: task.isEditable,
-                          ),
-                          onSaved: (value) {
-                            task.description = value;
-                          },
-                        ),
-                        const LabelField(label: 'Comentarios'),
-                        TextFormField(
-                          initialValue: task.comments,
-                          enabled: task.isEditable,
-                          keyboardType: TextInputType.multiline,
-                          maxLines: 5,
-                          decoration: textFieldDecoration(
-                            hint: 'Agrega algunos comentarios a tu tarea',
-                            enabled: task.isEditable,
-                          ),
-                          onSaved: (value) {
-                            task.comments = value;
-                          },
-                        ),
-                        const LabelField(label: 'Tags'),
-                        TextFormField(
-                          initialValue: task.tags,
-                          enabled: task.isEditable,
-                          decoration: textFieldDecoration(
-                            hint: 'Escribe algunos tags a tarea',
-                            enabled: task.isEditable,
-                          ),
-                          onSaved: (value) {
-                            task.tags = value ?? '';
-                          },
-                        ),
-                        const LabelField(label: 'Fecha'),
-                        GestureDetector(
-                          onTap: () => {if (task.isEditable) _seleccionarFecha(context, tecFecha)},
-                          child: TextFormField(
-                            controller: tecFecha,
-                            enabled: false,
-                            decoration: textFieldDecoration(
-                              hint: 'Puedes indicar una fecha límite',
-                              enabled: false,
-                            ),
-                          ),
-                        ),
-                        _getButtonLimpiarFecha(task, context, formKey, tecFecha),
-                      ],
-                    ),
-                  ),
-                ),
-                const Expanded(child: SizedBox.shrink()),
-                _getButtonActualizar(task, context, formKey),
-                _getButtonPrincipal(task, context, formKey),
-              ],
-            ),
+            child: taskId == '0'
+                ? _formulario(task, context, tecFecha, formKey)
+                : _futureBuilderBody(context, taskId, task, tecFecha, formKey),
           ),
         ],
       ),
@@ -172,35 +87,35 @@ class TaskPage extends StatelessWidget {
   }
 
   Widget _getButtonActualizar(
-    Task tarea,
+    Task task,
     BuildContext context,
     GlobalKey<FormState> formKey,
   ) {
-    return (!tarea.isNew && tarea.isEditable)
+    return (!task.isNew && task.isEditable)
         ? ButtonTaskUpdate(
             text: 'Actualizar',
-            onPressed: () => _onCreateUpdate(tarea: tarea, formKey: formKey),
+            onPressed: () => _onCreateUpdate(task: task, formKey: formKey),
           )
         : const SizedBox.shrink();
   }
 
   Widget _getButtonPrincipal(
-    Task tarea,
+    Task task,
     BuildContext context,
     GlobalKey<FormState> formKey,
   ) {
-    return tarea.isNew
+    return task.isNew
         ? ButtonTask(
             text: 'Crear',
             icon: Icons.check,
-            onPressed: () => _onCreateUpdate(tarea: tarea, formKey: formKey),
+            onPressed: () => _onCreateUpdate(task: task, formKey: formKey),
           )
-        : tarea.isEditable
+        : task.isEditable
             ? ButtonTask(
                 text: 'Completar Tarea',
                 icon: Icons.check,
                 onPressed: () => _onCreateUpdate(
-                  tarea: tarea,
+                  task: task,
                   formKey: formKey,
                   markCompleted: true,
                 ),
@@ -208,8 +123,114 @@ class TaskPage extends StatelessWidget {
             : const SizedBox.shrink();
   }
 
+  Column _formulario(Task task, BuildContext context, TextEditingController tecFecha, GlobalKey<FormState> formKey) {
+    return Column(
+      children: <Widget>[
+        Padding(
+          padding: myPaddingForm,
+          child: Form(
+            key: formKey,
+            child: Column(
+              children: [
+                const LabelField(label: 'Título*'),
+                TextFormField(
+                  initialValue: task.title,
+                  enabled: task.isEditable,
+                  decoration: textFieldDecoration(
+                    hint: 'Escribe aquí el título de tu tarea',
+                    enabled: task.isEditable,
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) return errorCampoObligatorio;
+
+                    return null;
+                  },
+                  onSaved: (value) {
+                    task.title = value ?? '';
+                  },
+                ),
+                const LabelField(label: 'Descripción'),
+                TextFormField(
+                  initialValue: task.description,
+                  enabled: task.isEditable,
+                  keyboardType: TextInputType.multiline,
+                  maxLines: 5,
+                  decoration: textFieldDecoration(
+                    hint: 'Describe cómo será tu tarea',
+                    enabled: task.isEditable,
+                  ),
+                  onSaved: (value) {
+                    task.description = value;
+                  },
+                ),
+                const LabelField(label: 'Comentarios'),
+                TextFormField(
+                  initialValue: task.comments,
+                  enabled: task.isEditable,
+                  keyboardType: TextInputType.multiline,
+                  maxLines: 5,
+                  decoration: textFieldDecoration(
+                    hint: 'Agrega algunos comentarios a tu tarea',
+                    enabled: task.isEditable,
+                  ),
+                  onSaved: (value) {
+                    task.comments = value;
+                  },
+                ),
+                const LabelField(label: 'Tags'),
+                TextFormField(
+                  initialValue: task.tags,
+                  enabled: task.isEditable,
+                  decoration: textFieldDecoration(
+                    hint: 'Escribe algunos tags a la tarea',
+                    enabled: task.isEditable,
+                  ),
+                  onSaved: (value) {
+                    task.tags = value ?? '';
+                  },
+                ),
+                const LabelField(label: 'Fecha'),
+                GestureDetector(
+                  onTap: () => {if (task.isEditable) _seleccionarFecha(context, tecFecha)},
+                  child: TextFormField(
+                    controller: tecFecha,
+                    enabled: false,
+                    decoration: textFieldDecoration(
+                      hint: 'Puedes indicar una fecha límite',
+                      enabled: false,
+                    ),
+                  ),
+                ),
+                _getButtonLimpiarFecha(task, context, formKey, tecFecha),
+                SizedBox(height: 25.0),
+              ],
+            ),
+          ),
+        ),
+        const Expanded(child: SizedBox.shrink()),
+        _getButtonActualizar(task, context, formKey),
+        _getButtonPrincipal(task, context, formKey),
+      ],
+    );
+  }
+
+  Widget _futureBuilderBody(
+      BuildContext context, String taskId, Task task, TextEditingController tecFecha, GlobalKey<FormState> formKey) {
+    return FutureBuilder<Task?>(
+        future: api.getTaskById(taskId),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.hasData) {
+            task = snapshot.data as Task;
+            tecFecha.text = task.formatDate;
+            return _formulario(task, context, tecFecha, formKey);
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+        });
+  }
+
   void _onCreateUpdate({
-    required Task tarea,
+    required Task task,
     required GlobalKey<FormState> formKey,
     bool markCompleted = false,
   }) async {
@@ -220,7 +241,7 @@ class TaskPage extends StatelessWidget {
       final context = formKey.currentContext!;
 
       // Crear tarea en la BD
-      if (tarea.isNew) {
+      if (task.isNew) {
         // if ((await api.insert(tarea)) == 0) {
         //   if (context.mounted) {
         //     showDialog<String>(
@@ -230,7 +251,7 @@ class TaskPage extends StatelessWidget {
         //   return;
         // }
       } else {
-        if (markCompleted) tarea.setCompleted();
+        if (markCompleted) task.setCompleted();
 
         // if ((await api.patch(tarea)) == 0) {
         //   if (context.mounted) {

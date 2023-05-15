@@ -10,7 +10,7 @@ String TaskListToJson(List<Task> data) => json.encode(List<dynamic>.from(data.ma
 class Task {
   int? id;
   String title;
-  int isCompleted = 0;
+  int isCompleted;
   DateTime? dueDate;
   String? comments;
   String? description;
@@ -32,7 +32,7 @@ class Task {
 
   String get formatDate => utils.formatDate(this.dueDate);
 
-  bool get isNew => id == null;
+  bool get isNew => id == null || id == 0;
 
   bool get isEditable => isCompleted == 0;
 
