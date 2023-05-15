@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-const Color primary91 = Color(0xff65C0D4);
 const Color primary20 = Color(0xff3D737F);
 const Color primary40 = Color(0xff65C0D4);
 const Color primary60 = Color(0xffA3D9E5);

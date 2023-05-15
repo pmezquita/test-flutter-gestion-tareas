@@ -34,7 +34,7 @@ class CardTask extends StatelessWidget {
                       Expanded(
                           child: Text(
                         task.completada ? 'Terminado' : 'Pendiente',
-                        style: task.completada ? tema.labelSmall?.copyWith(color: primary60) : tema.labelSmall,
+                        style: task.completada ? tema.labelSmall?.copyWith(color: primary40) : tema.labelSmall,
                         textAlign: TextAlign.start,
                       )),
                       Expanded(

@@ -58,7 +58,7 @@ class TaskPage extends StatelessWidget {
       builder: (context, child) => Theme(
         data: Theme.of(context).copyWith(
           colorScheme: ColorScheme.light(
-            primary: primary91,
+            primary: primary40,
           ),
         ),
         child: child!,
