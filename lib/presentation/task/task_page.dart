@@ -201,12 +201,12 @@ class TaskPage extends StatelessWidget {
                       hint: 'Puedes indicar una fecha límite',
                       enabled: false,
                     ),
-                    onSaved: (_) {
-                      if(tecFecha.text.isEmpty){
+                    onSaved: (value) {
+                      if(value == null || value.isEmpty){
                         task.dueDate = null;
                         context.read<TaskProvider>().selectedDate = null;
                       }else{
-                        task.dueDate = context.read<TaskProvider>().selectedDate;
+                        task.setDueDateStr(value);
                       }
                     },
                   ),

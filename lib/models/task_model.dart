@@ -32,6 +32,10 @@ class Task {
 
   String get formatDate => utils.formatDate(this.dueDate);
 
+  void setDueDateStr(String date){
+    this.dueDate = utils.dateFromStr(date);
+  }
+
   bool get isNew => id == null || id == 0;
 
   bool get isEditable => isCompleted == 0;
