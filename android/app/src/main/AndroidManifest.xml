@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.nextline.gestion.tareas.gestion_tareas">
+    <uses-permission android:name="android.permission.INTERNET" />
    <application
         android:label="Tareas"
         android:name="${applicationName}"
