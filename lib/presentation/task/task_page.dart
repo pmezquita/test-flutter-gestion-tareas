@@ -40,7 +40,7 @@ class TaskPage extends StatelessWidget {
             hasScrollBody: false,
             child: taskId == '0'
                 ? _formulario(task, context, tecFecha, formKey)
-                : _futureBuilderBody(context, taskId, task, tecFecha, formKey),
+                : _futureBuilderFormulario(context, taskId, task, tecFecha, formKey),
           ),
         ],
       ),
@@ -83,6 +83,7 @@ class TaskPage extends StatelessWidget {
             onPressed: () {
               tecFecha.text = '';
               task.dueDate = null;
+              context.read<TaskProvider>().selectedDate = null;
             },
           )
         : const SizedBox.shrink();
@@ -188,7 +189,7 @@ class TaskPage extends StatelessWidget {
                     enabled: task.isEditable,
                   ),
                   onSaved: (value) {
-                    task.tags = value ?? '';
+                    task.tags = value;
                   },
                 ),
                 const LabelField(label: 'Fecha'),
@@ -202,10 +203,10 @@ class TaskPage extends StatelessWidget {
                       enabled: false,
                     ),
                     onSaved: (value) {
-                      if(value == null || value.isEmpty){
+                      if (value == null || value.isEmpty) {
                         task.dueDate = null;
                         context.read<TaskProvider>().selectedDate = null;
-                      }else{
+                      } else {
                         task.setDueDateStr(value);
                       }
                     },
@@ -224,7 +225,7 @@ class TaskPage extends StatelessWidget {
     );
   }
 
-  Widget _futureBuilderBody(
+  Widget _futureBuilderFormulario(
       BuildContext context, String taskId, Task task, TextEditingController tecFecha, GlobalKey<FormState> formKey) {
     return FutureBuilder<Task?>(
         future: api.getTaskById(taskId),
@@ -244,15 +245,12 @@ class TaskPage extends StatelessWidget {
     required GlobalKey<FormState> formKey,
     bool markCompleted = false,
   }) async {
-    // TODO: verificar que al actualizar directamente una tarea sin estado de fecha seteado, se pierde la fecha
-
     if (!(formKey.currentState?.validate() ?? false)) {
       return;
     } else {
       formKey.currentState?.save();
       final context = formKey.currentContext!;
 
-      // Crear tarea en la BD
       if (task.isNew) {
         if (!(await api.createTask(task))) {
           if (context.mounted) {
